@@ -130,7 +130,8 @@ const Index = () => {
             </div>
             <div className="flex justify-center">
               <div className="relative">
-                <img
+                <img 
+                  // src={ashrafProfile} 
                   alt="Ashraf Alam" 
                   className="rounded-2xl shadow-2xl max-w-md w-full travel-card hover:scale-105 transition-transform duration-300"
                 />

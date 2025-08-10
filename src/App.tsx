@@ -1,6 +1,6 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import { AdminLayout } from "./layouts/AdminLayout";
@@ -17,8 +17,38 @@ import AdminGallery from "./pages/admin/AdminGallery";
 import Analytics from "./pages/admin/Analytics";
 import { TooltipProvider } from "./components/ui/tooltip";
 import { Toaster } from "./components/ui/toaster";
+import NewPost from "./pages/admin/NewPost";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <>
+      {!isAdminRoute && <Navigation />}
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/destinations" element={<Destinations />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/contact" element={<Contact />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
+        <Route path="/admin/posts" element={<AdminLayout><Posts /></AdminLayout>} />
+        <Route path="/admin/posts/new" element={<AdminLayout><NewPost /></AdminLayout>} />
+        <Route path="/admin/gallery" element={<AdminLayout><AdminGallery /></AdminLayout>} />
+        <Route path="/admin/analytics" element={<AdminLayout><Analytics /></AdminLayout>} />
+        
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,24 +56,7 @@ const App = () => (
       <Toaster />
       {/* <Sonner /> */}
       <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/destinations" element={<Destinations />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/contact" element={<Contact />} />
-          
-          {/* Admin Routes */}
-          <Route path="/admin" element={<AdminLayout><Dashboard /></AdminLayout>} />
-          <Route path="/admin/posts" element={<AdminLayout><Posts /></AdminLayout>} />
-          <Route path="/admin/gallery" element={<AdminLayout><AdminGallery /></AdminLayout>} />
-          <Route path="/admin/analytics" element={<AdminLayout><Analytics /></AdminLayout>} />
-          
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
+        <AppContent />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

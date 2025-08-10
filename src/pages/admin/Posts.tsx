@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 import { Input } from "../../components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../components/ui/dropdown-menu"
+import { Link } from "react-router-dom"
 
 const Posts = () => {
   const [searchTerm, setSearchTerm] = useState("")
@@ -103,9 +104,11 @@ const Posts = () => {
           <h1 className="text-3xl font-bold">Posts</h1>
           <p className="text-muted-foreground">Manage your travel blog posts and stories</p>
         </div>
-        <Button className="bg-gradient-primary hover:opacity-90">
-          <Plus className="w-4 h-4 mr-2" />
-          New Post
+        <Button asChild className="bg-gradient-primary hover:opacity-90">
+          <Link to="/admin/posts/new">
+            <Plus className="w-4 h-4 mr-2" />
+            New Post
+          </Link>
         </Button>
       </div>
 
@@ -229,9 +232,11 @@ const Posts = () => {
               ? "Try adjusting your search or filters" 
               : "Get started by creating your first blog post"}
           </p>
-          <Button className="bg-gradient-primary hover:opacity-90">
-            <Plus className="w-4 h-4 mr-2" />
-            Create New Post
+          <Button asChild className="bg-gradient-primary hover:opacity-90">
+            <Link to="/admin/posts/new">
+              <Plus className="w-4 h-4 mr-2" />
+              Create New Post
+            </Link>
           </Button>
         </div>
       )}
